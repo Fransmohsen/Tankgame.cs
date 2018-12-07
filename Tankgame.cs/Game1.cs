@@ -11,6 +11,13 @@ namespace Tankgame.cs
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        Player1 player1;
+        Player2 player2;
+        Bakgrund bakgrund;
+        Texture2D texture;
+        Vector2 vector;
+        Vector2 speed;
+
 
         public Game1()
         {
@@ -39,14 +46,13 @@ namespace Tankgame.cs
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
+           // bakgrund = new Bakgrund(Content.Load<Texture2D>("isplatta"), Window.ClientBounds.Width / 2, Window.ClientBounds.Height / 2);
+            player1 = new Player1(Content.Load<Texture2D>("ship"), 100, 300, 10.5f, 8.5f);
+            player2 = new Player2(Content.Load<Texture2D>("tripod"), 400, 300, 10.5f, 8.5f);
+            /////// player2 = new Player2(Content.Load<Texture2D>("tripod"), 400, 400, 10.5f, 8.5f);
 
             // TODO: use this.Content to load your game content here
         }
-
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
@@ -61,12 +67,13 @@ namespace Tankgame.cs
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
-            // TODO: Add your update logic here
-
-            base.Update(gameTime);
+            player1.Update(Window);
+            player2.Update(Window);
         }
+            //////// player2.Update(Window);
 
+            // TODO: Add your update logic here'
+          
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
@@ -75,6 +82,13 @@ namespace Tankgame.cs
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
+            spriteBatch.Begin();
+
+            //bakgrund.Draw(spriteBatch);
+            player1.Draw(spriteBatch);
+            player2.Draw(spriteBatch);
+            /////////player2.Draw(spriteBatch);
+            spriteBatch.End();
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
